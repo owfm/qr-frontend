@@ -5,18 +5,42 @@ function App() {
   const [dataList, setDataList] = useState([]);
 
   const API_URL = "https://qr-backend-stylus.herokuapp.com";
+  // const API_URL = "http://localhost:5000";
 
-  // const API_URL =
-  //   process.env.NODE_ENV == "development"
-  //     ? "http://localhost:5000"
-  //     : "https://qr-backend-stylus.herokuapp.com";
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState("");
 
   const [qrs, setQrs] = useState(null);
   const handleChange = event => {
-    setDataList(event.target.value.split(",").map(item => item.trim()));
+    setErrors("");
+    setDataList(
+      event.target.value
+        .split(",")
+        .map(item => item.trim())
+        .map(item => item.replace("/\\/i", ""))
+        .filter(item => item !== "")
+    );
   };
+
   const handleSubmit = e => {
     e.preventDefault();
+    setLoading(true);
+    if (!dataList) {
+      setErrors("Please enter a list.");
+    }
+
+    dataList.forEach(item => {
+      if (item.includes("/")) {
+        setErrors("Only use alphanumeric, hyphens and underscores.");
+      }
+    });
+
+    if (errors) {
+      setDataList([]);
+      setLoading(false);
+      return;
+    }
+
     fetch(`${API_URL}/qr`, {
       method: "POST",
       body: JSON.stringify({ data: dataList }), // data can be `string` or {object}!
@@ -25,7 +49,22 @@ function App() {
       },
     })
       .then(response => response.json())
-      .then(data => setQrs(data));
+      .then(data => {
+        setQrs(data);
+        setLoading(false);
+      })
+      .catch(e => {
+        setErrors(
+          "Something went wrong. Only use alphanumeric characters, underscores and hyphens."
+        );
+        setLoading(false);
+        setDataList([]);
+      });
+  };
+
+  const Errors = () => {
+    if (!errors) return null;
+    return <h4 className="errors">{errors}</h4>;
   };
 
   const QRs = () => {
@@ -46,8 +85,11 @@ function App() {
       <div className="Input">
         <form onSubmit={handleSubmit}>
           <textarea name="datalist" onChange={handleChange} />
-          <p>Enter a list of data, comma separated.</p>
-          <button submit>Generate QR Codes</button>
+          <p>Enter a list of data, comma separated. Slashes are not allowed.</p>
+          <Errors />
+          <button submit disabled={loading}>
+            {!loading ? "Generate QR Codes" : "Please wait..."}
+          </button>
         </form>
         <QRs />
       </div>

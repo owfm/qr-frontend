@@ -3,6 +3,10 @@ body {
   background-color: #282c34;
 }
 
+.errors {
+  color: white;
+}
+
 .App {
   text-align: center;
   height: 100%;
