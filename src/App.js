@@ -1,6 +1,11 @@
 import React, { useState } from "react";
 import "./App.css";
 
+const API_URL =
+  process.env.NODE_ENV === "development"
+    ? "http://localhost:5000"
+    : "https://qr-backend-stylus.herokuapp.com";
+
 function App() {
   const [dataList, setDataList] = useState([]);
   const [qrs, setQrs] = useState(null);
@@ -9,7 +14,7 @@ function App() {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    fetch("https://qr-backend-stylus.herokuapp.com/qr", {
+    fetch(`${API_URL}/qr`, {
       method: "POST",
       body: JSON.stringify({ data: dataList }), // data can be `string` or {object}!
       headers: {
@@ -26,11 +31,8 @@ function App() {
     return qrs.map(qr => {
       return (
         <>
-          <img
-            alt={`${qr.split("/").pop()}`}
-            src={`https://qr-backend-stylus.herokuapp.com/static/${qr}`}
-          />
-          {/* <p>{qr.split("/")[1].split(".")[0]}</p> */}
+          <img alt={`${qr.split("/").pop()}`} src={`${API_URL}/static/${qr}`} />
+          <p>{qr.split(".")[0]}</p>
         </>
       );
     });
