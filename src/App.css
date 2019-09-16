@@ -1,5 +1,34 @@
+body {
+  /* background-color: #111111; */
+  background-color: #282c34;
+}
+
 .App {
   text-align: center;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Input textarea {
+  margin-top: 50px;
+  padding: 10px;
+  width: 80vw;
+  height: 30vw;
+  text-align: center;
+  font-size: 2rem;
+}
+
+.Input button {
+  padding: 10px;
+  font-size: 1.5rem;
+  background: white;
+  color: black;
+}
+
+.App p {
+  color: white;
 }
 
 .App-logo {
@@ -9,7 +38,6 @@
 }
 
 .App-header {
-  background-color: #282c34;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
