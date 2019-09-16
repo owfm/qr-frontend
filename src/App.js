@@ -4,10 +4,12 @@ import "./App.css";
 function App() {
   const [dataList, setDataList] = useState([]);
 
-  const API_URL =
-    process.env.NODE_ENV === "development"
-      ? "http://localhost:5000"
-      : "https://qr-backend-stylus.herokuapp.com";
+  const API_URL = "https://qr-backend-stylus.herokuapp.com";
+
+  // const API_URL =
+  //   process.env.NODE_ENV == "development"
+  //     ? "http://localhost:5000"
+  //     : "https://qr-backend-stylus.herokuapp.com";
 
   const [qrs, setQrs] = useState(null);
   const handleChange = event => {
