@@ -9,7 +9,6 @@ function App() {
   };
   const handleSubmit = e => {
     e.preventDefault();
-    console.log();
     fetch("https://qr-backend-stylus.herokuapp.com/qr", {
       method: "POST",
       body: JSON.stringify({ data: dataList }), // data can be `string` or {object}!
@@ -23,6 +22,7 @@ function App() {
 
   const QRs = () => {
     if (!qrs) return null;
+
     return qrs.map(qr => {
       return (
         <>
@@ -30,7 +30,7 @@ function App() {
             alt={`${qr.split("/").pop()}`}
             src={`https://qr-backend-stylus.herokuapp.com/static/${qr}`}
           />
-          <p>{qr.split("/")[1].split(".")[0]}</p>
+          {/* <p>{qr.split("/")[1].split(".")[0]}</p> */}
         </>
       );
     });
