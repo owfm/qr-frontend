@@ -10,7 +10,7 @@ function App() {
   const handleSubmit = e => {
     e.preventDefault();
     console.log();
-    fetch("http://localhost:5000/qr", {
+    fetch("https://qr-backend-stylus.herokuapp.com/qr", {
       method: "POST",
       body: JSON.stringify({ data: dataList }), // data can be `string` or {object}!
       headers: {
@@ -28,7 +28,7 @@ function App() {
         <>
           <img
             alt={`${qr.split("/").pop()}`}
-            src={`http://localhost:5000/${qr}`}
+            src={`https://qr-backend-stylus.herokuapp.com/static/${qr}`}
           />
           <p>{qr.split("/")[1].split(".")[0]}</p>
         </>
