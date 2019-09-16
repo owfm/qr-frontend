@@ -1,13 +1,14 @@
 import React, { useState } from "react";
 import "./App.css";
 
-const API_URL =
-  process.env.NODE_ENV === "development"
-    ? "http://localhost:5000"
-    : "https://qr-backend-stylus.herokuapp.com";
-
 function App() {
   const [dataList, setDataList] = useState([]);
+
+  const API_URL =
+    process.env.NODE_ENV === "development"
+      ? "http://localhost:5000"
+      : "https://qr-backend-stylus.herokuapp.com";
+
   const [qrs, setQrs] = useState(null);
   const handleChange = event => {
     setDataList(event.target.value.split(",").map(item => item.trim()));
